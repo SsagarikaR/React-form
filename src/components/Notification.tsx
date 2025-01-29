@@ -1,8 +1,6 @@
-import React from 'react'
-
 function Notification({message}:{message:string}) {
   return (
-    <div className='notifivation-container'>
+    <div className='notification-container'>
        <div id="toastBox">
             <div className="toast">  {message}</div>
         </div>
