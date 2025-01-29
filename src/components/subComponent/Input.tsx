@@ -1,13 +1,4 @@
-interface InputProps {
-    field: string,
-    id: string,
-    type:string,
-    require: boolean,
-    value:string,
-    setValue:(value:string)=>void,
-    error:string,
-    setError:(value:string)=>void,
-}
+import { InputProps } from "../Interface";
 import { validations } from "../ValidationRule";
 
 
