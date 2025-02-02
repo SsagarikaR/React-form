@@ -4,7 +4,8 @@ import { validations } from "./ValidationRule";
 import { forFormData } from "./Interface";
 import { useStateContext } from "./StateManager";
 
-function Form() {
+function Form({onSubmit}:{onSubmit:(message:string)=>void}) {
+
   const [full_name, setFull_name] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
@@ -18,52 +19,6 @@ function Form() {
   const [DOB_error, setDOBError] = useState("");
   const [college_error, setCollegeError] = useState("");
   const { students, addStudent, editingId, updateStudent } = useStateContext() ?? {};
-
-  const formData: forFormData = {
-    full_name: full_name,
-    email: email,
-    contact: contact,
-    password: password,
-    DOB: DOB,
-    college: college,
-  };
-
-  console.log(formData);
-  useEffect(() => {
-    if (students && editingId !== null && editingId !== undefined) {
-      const ediStudent = students[editingId];
-      if (ediStudent.full_name) setFull_name(ediStudent.full_name);
-      if (ediStudent.email) setEmail(ediStudent.email);
-      if (ediStudent.contact) setContact(ediStudent.contact);
-      if (ediStudent.password) setPassword(ediStudent.password);
-      if (ediStudent.DOB) setDOB(ediStudent.DOB);
-      if (ediStudent.college) setCollege(ediStudent.college);
-    }
-  }, [editingId, students]);
-
-  const submit = () => {
-    const isSubmit=checkError()
-    console.log(isSubmit)
-    if (isSubmit && updateStudent && editingId) {
-      updateStudent(editingId, formData);
-      makeFieldEmpty();
-      
-    }
-    else if (isSubmit && addStudent) {
-      addStudent(formData);
-      makeFieldEmpty();
-    }
-    
-  };
-
-  const makeFieldEmpty =()=>{
-    setFull_name("");
-    setContact("");
-    setEmail("");
-    setPassword("");
-    setDOB("");
-    setCollege("");
-  }
 
   const inputField=[
     {
@@ -128,6 +83,54 @@ function Form() {
     }
   ]
 
+  const formData: forFormData = {
+    full_name: full_name,
+    email: email,
+    contact: contact,
+    password: password,
+    DOB: DOB,
+    college: college,
+  };
+
+  // console.log(formData);
+  useEffect(() => {
+    if (students && editingId !== null && editingId !== undefined) {
+      const ediStudent = students[editingId];
+      if (ediStudent.full_name) setFull_name(ediStudent.full_name);
+      if (ediStudent.email) setEmail(ediStudent.email);
+      if (ediStudent.contact) setContact(ediStudent.contact);
+      if (ediStudent.password) setPassword(ediStudent.password);
+      if (ediStudent.DOB) setDOB(ediStudent.DOB);
+      if (ediStudent.college) setCollege(ediStudent.college);
+    }
+  }, [editingId, students]);
+
+  const submit = () => {
+    const isSubmit=checkError()
+    // console.log(isSubmit)
+    if (isSubmit && updateStudent && editingId) {
+      updateStudent(editingId, formData);
+      onSubmit("Successfully updated")
+      makeFieldEmpty();
+      
+    }
+    else if (isSubmit && addStudent) {
+      addStudent(formData);
+      onSubmit("Successfully submitted")
+      makeFieldEmpty();
+    }
+    
+  };
+
+  const makeFieldEmpty =()=>{
+    setFull_name("");
+    setContact("");
+    setEmail("");
+    setPassword("");
+    setDOB("");
+    setCollege("");
+  }
+
   const checkError = ():boolean => {
     let isValid=true;
     for (const key in validations["full_name"]) {
@@ -186,69 +189,8 @@ function Form() {
                       setError={input.setError}
                     />
           })}
-          {/* <Input
-            field="Full name"
-            id="full_name"
-            type="text"
-            require={true}
-            value={full_name}
-            setValue={setFull_name}
-            error={full_name_error}
-            setError={setFullNameError}
-          />
-          <Input
-            field="Email"
-            id="email"
-            type="text"
-            require={true}
-            value={email}
-            setValue={setEmail}
-            error={email_error}
-            setError={setEmail_Error}
-          />
-          <Input
-            field="Contact"
-            id="contact"
-            type="text"
-            require={true}
-            value={contact}
-            setValue={setContact}
-            error={contact_error}
-            setError={setContactError}
-          />
-          <Input
-            field="password"
-            id="password"
-            type="password"
-            require={true}
-            value={password}
-            setValue={setPassword}
-            error={password_error}
-            setError={setPasswordError}
-          />
-          <Input
-            field="Date of birth"
-            id="DOB"
-            type="date"
-            require={false}
-            value={DOB}
-            setValue={setDOB}
-            error={DOB_error}
-            setError={setDOBError}
-          />
-          <Input
-            field="College"
-            type="text"
-            id="college"
-            require={false}
-            value={college}
-            setValue={setCollege}
-            error={college_error}
-            setError={setCollegeError}
-          /> */}
         </div>
-        <button
-          className="btn submit"
+        <button className="btn submit"
           onClick={(e) => {
             e.preventDefault();
             checkError();

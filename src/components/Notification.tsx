@@ -1,4 +1,5 @@
 function Notification({message}:{message:string}) {
+
   return (
     <div className='notification-container'>
        <div id="toastBox">

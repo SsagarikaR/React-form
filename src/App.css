@@ -15,6 +15,34 @@ body{
   justify-content: center;
   column-gap: 2rem;
 }
+@media screen and (max-width:1200px){
+  #root{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 2rem;
+  }
+  .weather-container{
+    position: static !important;
+  }
+ .form_container,.table_container{
+  width: 80% !important;
+ }
+}
+@media screen and (max-width:700px){
+  .form_container,.table_container{
+    width: 95% !important;
+  }
+}
+@media screen and (max-width:550px){
+  label{
+  font-size: 1.2rem !important;
+ }
+ .input_box{
+  padding:0.7rem 0.5rem  !important;
+ }
+ 
+}
 .btn{
   /* width: 12rem; */
   margin: auto;
@@ -26,6 +54,76 @@ body{
   border: none;
   background-color: #71b7e6;
 }
+/* -------------------------WEATHER CONTAINER------------------------ */
+.weather-container{
+  position: absolute;
+  top: 7rem;
+  left: 9em;
+}
+#city{
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+.weather-heading{
+  margin: 0.7rem 0.2rem ;
+  text-shadow: 0 2px 2px wheat;
+  font-size: 1.8rem;
+}
+/* -------------------------NOTIFICATION------------------------ */
+#toastBox{
+  position: absolute;
+  top:7rem;
+  right: 7.5rem;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 20px;
+  z-index: 2;
+}
+.toast{
+  box-shadow: 0 0 6px 2px black;
+  width: 350px;
+  height: 80px;
+  background: #fff;
+  font-weight: 500;
+  margin: 15px 0;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 20px;
+}
+.toast i{
+  margin: 0 20px;
+  font-size: 35px;
+  color: green;
+}
+.toast .no_data{
+  color: rgb(143, 7, 7);
+}
+.toast::after{
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 5px;
+  background: green;
+  animation: anim 5s linear forwards;
+}
+.toast:has(.no_data)::after{
+  background: rgb(143, 7, 7);
+}
+.hide{
+  display: none;
+}
+@keyframes anim{
+  100%{
+     width: 0;
+  }
+}
+
 /* -------------------------FORM------------------------ */
 .form_container{
   background: #fff;
@@ -96,6 +194,7 @@ label{
   width: 49%;
   box-shadow: 0px 0px 10px 4px;
   max-height:38rem;
+  min-height: 30rem;
   overflow: auto;
 }
 
